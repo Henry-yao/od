@@ -38,3 +38,14 @@ class Session(models.Model):
 
     #new m2m
     attendee_ids = fields.Many2many('res.partner',string="Attendees")
+
+    #将progress字段添加到会话 session增加被占用的椅子字段pro..
+    taken_seats = fields.Float(string="Taken seats",compute='_taken_seats')
+
+    @api.depends('seats','attendee_ids')
+    def _taken_seats(self):
+        for r in self:
+            if not r.seats:
+                r.taken_seats = 0.0
+            else:
+                r.taken_seats = 100.0 * len(r.attendee_ids)/r.seats
