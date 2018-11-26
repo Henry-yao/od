@@ -31,9 +31,10 @@ class Session(models.Model):
     seats = fields.Integer(string="Number of seats")
     # 为session选择一个instructor时，只有存在instructor为true到instructor才是可见的
     instructor_id = fields.Many2one('res.partner',string="Instructor",domain=[('instructor', '=', True)])
-    course_id = fields.Many2one()
+
     #new m2n
-    instructor_id = fields.Many2one('res.partner',string="Instructor")
+    instructor_id = fields.Many2one('res.partner',string="Instructor",domain=['|',('instructor','=',True),('category_id.name','ilike',"Teacher")])
     course_id = fields.Many2one('openacademy.course',ondelet='cascade',string="Course",required=True)
+
     #new m2m
     attendee_ids = fields.Many2many('res.partner',string="Attendees")
