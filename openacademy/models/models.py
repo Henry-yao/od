@@ -26,9 +26,12 @@ class Course(models.Model):
 class Session(models.Model):
     _name = 'openacademy.session'
     name = fields.Char(required=True)
-    start_date = fields.Date()
+    start_date = fields.Date(default=fields.Date.today)# （）start_date默认值设置为今天
     duration = fields.Float(digits=(6,2),help="Duration in days")
     seats = fields.Integer(string="Number of seats")
+    # 在session中添加一个字段active，并在默认情况下设置为True
+    active = fields.Boolean(default=True)
+
     # 为session选择一个instructor时，只有存在instructor为true到instructor才是可见的
     instructor_id = fields.Many2one('res.partner',string="Instructor",domain=[('instructor', '=', True)])
 
