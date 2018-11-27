@@ -52,3 +52,21 @@ class Session(models.Model):
                 r.taken_seats = 0.0
             else:
                 r.taken_seats = 100.0 * len(r.attendee_ids)/r.seats
+
+    # 添加一个显示的onchange方法警告无效值，如负数座位，或participants比seats多的情况
+    @api.onchange('seats','attendee_ids')
+    def _verify_valid_seats(self):
+        if self.seats < 0:
+            return {
+                'warning':{
+                    'title':"Incorrect 'seats' value",
+                    'message':"The mumber of available seats may not be negative",
+                },
+            }
+        if self.seats < len(self.attendee_ids):
+            return {
+                'warning':{
+                    'title':"Too many attendees",
+                    'message':"Increase seats or remove excess attendees",
+                },
+            }
