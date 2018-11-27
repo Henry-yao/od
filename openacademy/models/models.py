@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, exceptions
+from odoo import timedelta
 
 # class openacademy(models.Model):
 #     _name = 'openacademy.openacademy'
@@ -70,6 +71,9 @@ class Session(models.Model):
 
     #将progress字段添加到会话 session增加被占用的椅子字段pro..
     taken_seats = fields.Float(string="Taken seats",compute='_taken_seats')
+
+    #日程表：增加一个end_date字段，由start_date和duration 计算得出
+    end_date = fields.Date(string="End Date", store=True, compute='_get_end_date', inverse='_set_end_date')
 
     @api.depends('seats','attendee_ids')
     def _taken_seats(self):
