@@ -22,6 +22,32 @@ class Course(models.Model):
     responsible_id = fields.Many2one('res.users',ondelete='set null',string="Responsible",index=True)
     #new o2m
     session_ids = fields.One2many('openacademy.session','course_id',string="Sessions")
+
+    #name有了唯一约束，不能在用duplicate方法来创建副本，实现重新赋值的方法是：使其赋值记录的其他字段，并把新记录的name字段改为【原名称】的副本
+    @api.multi
+    def copy(self,default=None):
+        default = dict(default or {})
+        copied_count = self.search_count(
+            [('name','=like',u"Copy of {}%".format(self.name))]
+        )
+        if not copied_count:
+            new_name = u"Copy of {}".format(self.name)
+        else:
+            new_name = u"Copy of {} ({})".format(self.name,copied_count)
+        default['name'] = new_name
+        return super(Course, self).copy(default)
+
+    #添加SQL约束：检查course的description和title是否不痛，course的名字不能重复
+    _sql_constraints = [
+        ('name_description_check',
+         'CHECK(name != description)',
+         "The title of the course should not be the description"),
+
+        ('name_unique',
+         'UNIQUE(name)',
+         "The course title must be unique"),
+    ]
+
 # session类
 class Session(models.Model):
     _name = 'openacademy.session'
