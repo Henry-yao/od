@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, exceptions
-from odoo import timedelta
+from datetime import timedelta
 
 # class openacademy(models.Model):
 #     _name = 'openacademy.openacademy'
@@ -38,7 +38,7 @@ class Course(models.Model):
         default['name'] = new_name
         return super(Course, self).copy(default)
 
-    #添加SQL约束：检查course的description和title是否不痛，course的名字不能重复
+    #添加SQL约束：检查course的description和title是否不同，course的名字不能重复
     _sql_constraints = [
         ('name_description_check',
          'CHECK(name != description)',
@@ -83,6 +83,26 @@ class Session(models.Model):
             else:
                 r.taken_seats = 100.0 * len(r.attendee_ids)/r.seats
 
+    # # 增加一个end_date字段。由start_date and duration jisuanchu
+    # @api.depends('start_date', 'duration')
+    # def _get_end_date(self):
+    #     for r in self:
+    #         if not (r.start_date and r.duration):
+    #             r.end_date = r.start_date
+    #             continue
+    #
+    #             start = fields.Datetime.from_string(r.start_date)
+    #             duration = timedelta(days=r.duration, seconds=-1)
+    #             r.end_date = start + duration
+    #     def _set_end_date(self):
+    #         for r in self:
+    #             if not (r.start_date and r.end_date):
+    #                 continue
+    #
+    #                 start_date = fields.Datetime.from_string(r.start_date)
+    #                 end_date = fields.Datetime.from_string(r.end_date)
+    #                 r.duration = (end_date - start_date).days + 1
+
     # 添加一个显示的onchange方法警告无效值，如负数座位，或participants比seats多的情况
     @api.onchange('seats','attendee_ids')
     def _verify_valid_seats(self):
@@ -100,6 +120,27 @@ class Session(models.Model):
                     'message':"Increase seats or remove excess attendees",
                 },
             }
+
+    # 增加一个end_date字段。由start_date and duration jisuanchu
+    @api.depends('start_date', 'duration')
+    def _get_end_date(self):
+        for r in self:
+            if not (r.start_date and r.duration):
+                r.end_date = r.start_date
+                continue
+
+                start = fields.Datetime.from_string(r.start_date)
+                duration = timedelta(days=r.duration, seconds=-1)
+                r.end_date = start + duration
+    def _set_end_date(self):
+        for r in self:
+            if not (r.start_date and r.end_date):
+                continue
+
+                start_date = fields.Datetime.from_string(r.start_date)
+                end_date = fields.Datetime.from_string(r.end_date)
+                r.duration = (end_date - start_date).days + 1
+
     # 添加一个约束用于检查instructor是否参与了他自己的session，import 新加exceptions
     @api.constrains('instructor_id', 'attedee_ids')
     def _check_instructor_not_attendees(self):
