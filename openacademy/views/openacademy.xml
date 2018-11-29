@@ -4,9 +4,25 @@
     <!--menu-->
     <record model="ir.actions.act_window" id="course_list_action">
         <field name="name">Courses</field>
+        <!--添加一个按钮用于筛选当前用户负责的courses，默认进行筛选-->
+        <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="description"/>
+            <filter name="my_courses" string="My Courses" domain="[('responsible_id', '=', uid)]"/>
+            <group string="Group By">
+                <field name="by_responsible" context="{'group_by':'responsible_id'}"/>
+            </group>
+        </search>
+        </field>
+        <!--结束-->
+
         <field name="res_model">openacademy.course</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+        <!--按钮-->
+        <field name="context" eval="{'search_default_my_courses':1}"/>
+
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">Create the first course</p>
         </field>
