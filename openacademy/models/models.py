@@ -56,6 +56,10 @@ class Session(models.Model):
     start_date = fields.Date(default=fields.Date.today)# （）start_date默认值设置为今天
     duration = fields.Float(digits=(6,2),help="Duration in days")
     seats = fields.Integer(string="Number of seats")
+
+    # 增加attendees为一个储存在数据库中的计算型字段
+
+
     # 在session中添加一个字段active，并在默认情况下设置为True
     active = fields.Boolean(default=True)
 
@@ -75,6 +79,11 @@ class Session(models.Model):
     #日程表：增加一个end_date字段，由start_date和duration 计算得出
     end_date = fields.Date(string="End Date", store=True, compute='_get_end_date', inverse='_set_end_date')
 
+    # 创建一个计算型字段用来计算session的持续时间
+    # hours = fields.Float(string="Duration in hours", coumute='_get)hours', inverse='_set_hours')
+    # attendees_count = fields.Integer(
+    #     string="Attendees count", compute='_get_attendees_count', store=True
+    # )
     @api.depends('seats','attendee_ids')
     def _taken_seats(self):
         for r in self:
@@ -141,9 +150,28 @@ class Session(models.Model):
                 end_date = fields.Datetime.from_string(r.end_date)
                 r.duration = (end_date - start_date).days + 1
 
+    # session的持续时间，创建一个计算型字段
+    @api.depends('duration')
+    def _get_hours(self):
+        for r in self:
+            r.hours = r.duration * 24
+
+    def _set_hours(self):
+        for r in self:
+            r.duration = r.hours / 24
+    #     # 增加attendees为一个储存在数据库中的计算型字段
+
+    # 增加 attendees 为一个储存在数据库中的计算型字段。
+    # @api.depends('attendee_ids')
+    # def _get_attendees_cou(self):
+    #     for r in self:
+    #         r.attendee_count = len(r.attendee_ids)
+
     # 添加一个约束用于检查instructor是否参与了他自己的session，import 新加exceptions
     @api.constrains('instructor_id', 'attedee_ids')
     def _check_instructor_not_attendees(self):
         for r in self:
             if r.instructor_id and r.instructor_id in r.attendee_ids:
                 raise exceptions.ValidationError("A session's instructor can't be an attendee")
+
+
