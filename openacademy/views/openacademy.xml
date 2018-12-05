@@ -160,16 +160,16 @@
     <!--</record>-->
 
     <!--为 Session 添加一个 graph 视图，用条形图展示每个 courses 的参与人数。-->
-    <!--<record id="openacademy_session_graph_view" model="ir.ui.view">-->
-        <!--<field name="name">openacademy.session.graph</field>-->
-        <!--<field name="model">openacademy.session</field>-->
-        <!--<field name="arch" type="xml">-->
-            <!--<graph string="Participations by Courses">-->
-                <!--<field name="course_id"/>-->
-                <!--<field name="attendees_count" type="measure"/>-->
-            <!--</graph>-->
-        <!--</field>-->
-    <!--</record>-->
+    <record id="openacademy_session_graph_view" model="ir.ui.view">
+        <field name="name">openacademy.session.graph</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <graph string="Participations by Courses">
+                <field name="course_id"/>
+                <field name="attendees_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
 
     <record model="ir.actions.act_window" id="session_list_action">
         <field name="name">Sessions</field>
