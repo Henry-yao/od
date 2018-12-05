@@ -80,10 +80,10 @@ class Session(models.Model):
     end_date = fields.Date(string="End Date", store=True, compute='_get_end_date', inverse='_set_end_date')
 
     # 创建一个计算型字段用来计算session的持续时间
-    # hours = fields.Float(string="Duration in hours", coumute='_get)hours', inverse='_set_hours')
-    # attendees_count = fields.Integer(
-    #     string="Attendees count", compute='_get_attendees_count', store=True
-    # )
+    hours = fields.Float(string="Duration in hours", coumute='_get)hours', inverse='_set_hours')
+    attendees_count = fields.Integer(
+        string="Attendees count", compute='_get_attendees_count', store=True
+    )
     @api.depends('seats','attendee_ids')
     def _taken_seats(self):
         for r in self:
@@ -162,10 +162,10 @@ class Session(models.Model):
     #     # 增加attendees为一个储存在数据库中的计算型字段
 
     # 增加 attendees 为一个储存在数据库中的计算型字段。
-    # @api.depends('attendee_ids')
-    # def _get_attendees_cou(self):
-    #     for r in self:
-    #         r.attendee_count = len(r.attendee_ids)
+    @api.depends('attendee_ids')
+    def _get_attendees_cou(self):
+        for r in self:
+            r.attendee_count = len(r.attendee_ids)
 
     # 添加一个约束用于检查instructor是否参与了他自己的session，import 新加exceptions
     @api.constrains('instructor_id', 'attedee_ids')
