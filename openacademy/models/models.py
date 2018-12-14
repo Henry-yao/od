@@ -162,10 +162,10 @@ class Session(models.Model):
     #     # 增加attendees为一个储存在数据库中的计算型字段
 
     # 增加 attendees 为一个储存在数据库中的计算型字段。
-    # @api.depends('attendee_ids')
-    # def _get_attendees_cou(self):
-    #     for r in self:
-    #         r.attendee_count = len(r.attendee_ids)
+    @api.depends('attendee_ids')
+    def _get_attendees_cou(self):
+        for r in self:
+            r.attendee_count = len(r.attendee_ids)
 
     # 添加一个约束用于检查instructor是否参与了他自己的session，import 新加exceptions
     @api.constrains('instructor_id', 'attedee_ids')
