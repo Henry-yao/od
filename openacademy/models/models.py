@@ -80,10 +80,10 @@ class Session(models.Model):
     end_date = fields.Date(string="End Date", store=True, compute='_get_end_date', inverse='_set_end_date')
 
     # 创建一个计算型字段用来计算session的持续时间
-    hours = fields.Float(string="Duration in hours", coumute='_get)hours', inverse='_set_hours')
-    attendees_count = fields.Integer(
-        string="Attendees count", compute='_get_attendees_count', store=True
-    )
+    # hours = fields.Float(string="Duration in hours", coumute='_get)hours', inverse='_set_hours')
+    # attendees_count = fields.Integer(
+    #     string="Attendees count", compute='_get_attendees_count', store=True
+    # )
     @api.depends('seats','attendee_ids')
     def _taken_seats(self):
         for r in self:
@@ -92,7 +92,7 @@ class Session(models.Model):
             else:
                 r.taken_seats = 100.0 * len(r.attendee_ids)/r.seats
 
-    # # 增加一个end_date字段。由start_date and duration jisuanchu
+    # # 增加一个end_date字段。由start_date and duration 计算
     # @api.depends('start_date', 'duration')
     # def _get_end_date(self):
     #     for r in self:
