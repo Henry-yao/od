@@ -1,0 +1,113 @@
+<odoo>
+  <data>
+
+    <record id="cf_license.list" model="ir.ui.view">
+      <field name="name">CF License List</field>
+      <field name="model">cf.license</field>
+      <field name="comment">许可证列表</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="UUID"/>
+          <field name="user_name"/>
+          <field name="machine_code"/>
+          <field name="sign" invisible="1"/>
+          <field name="module_ids"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="cf_license.form" model="ir.ui.view">
+      <field name="name">CF License Form</field>
+      <field name="model">cf.license</field>
+      <field name="comment">许可证表单</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="user_name"/>
+                <field name="UUID" readonly="1"/>
+              </group>
+              <group>
+                <field name="machine_code"/>
+                <field name="sign" invisible="1"/>
+              </group>
+            </group>
+            <group>
+              <field name="sign"/>
+            </group>
+            <notebook>
+              <page string="授权可使用模块">
+                <field name="module_ids" context='{"default_license_id": id}'>
+                  <tree>
+                    <field name="name"/>
+                    <field name="note"/>
+                  </tree>
+                  <form string="授权模块">
+                    <group>
+                      <field name="license_id" invisible="1"/>
+                      <field name="name"/>
+                      <field name="note"/>
+                    </group>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="cf_license.list">
+      <field name="name">cf_license list</field>
+      <field name="model">cf_license.cf_license</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <record id="act_license_win" model="ir.actions.act_window">
+      <field name="name">CF License Window</field>
+      <field name="res_model">cf.license</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="cf_license.action_server">
+      <field name="name">cf_license server</field>
+      <field name="model_id" ref="model_cf_license_cf_license"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <menuitem name="CF License" id="menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="License Manage" id="menu_lic_manage" parent="menu_root"/>
+    <!--<menuitem name="Menu 2" id="cf_license.menu_2" parent="cf_license.menu_root"/>-->
+
+    <!-- actions -->
+    <menuitem name="License List" id="menu_lic_list" parent="menu_lic_manage" action="act_license_win"/>
+    <!--
+    <menuitem name="Server to list" id="cf_license" parent="cf_license.menu_2"
+              action="cf_license.action_server"/>
+    -->
+  </data>
+</odoo>
