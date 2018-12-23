@@ -80,7 +80,8 @@ class Session(models.Model):
     end_date = fields.Date(string="End Date", store=True, compute='_get_end_date', inverse='_set_end_date')
 
     # 创建一个计算型字段用来计算session的持续时间
-    hours = fields.Float(string="Duration in hours", coumute='_get)hours', inverse='_set_hours')
+    hours = fields.Float(string="Duration in hours", compute='_get_hours', inverse='_set_hours')
+
     attendees_count = fields.Integer(
         string="Attendees count", compute='_get_attendees_count', store=True
     )
@@ -163,7 +164,7 @@ class Session(models.Model):
 
     # 增加 attendees 为一个储存在数据库中的计算型字段。
     @api.depends('attendee_ids')
-    def _get_attendees_cou(self):
+    def _get_attendees_count(self):
         for r in self:
             r.attendee_count = len(r.attendee_ids)
 
