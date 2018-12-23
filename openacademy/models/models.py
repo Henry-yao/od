@@ -64,7 +64,7 @@ class Session(models.Model):
     # 在session中添加一个字段active，并在默认情况下设置为True
     active = fields.Boolean(default=True)
 #看板 x# 看板，在session增加 color ,更新到action
-    color = fields.Integer
+    color = fields.Integer(string="color")
 
     # 为session选择一个instructor时，只有存在instructor为true到instructor才是可见的
     instructor_id = fields.Many2one('res.partner',string="Instructor",domain=[('instructor', '=', True)])
