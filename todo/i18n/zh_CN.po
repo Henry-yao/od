@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* todo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-30 16:54+0800\n"
+"PO-Revision-Date: 2018-12-30 16:57+0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.0.1\n"
+"Last-Translator: \n"
+"Language: zh_CN\n"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_id
+msgid "ID"
+msgstr "序号"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task___last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: todo
+#: model:ir.ui.menu,name:todo.menu_task
+msgid "Task"
+msgstr "待办事项"
+
+#. module: todo
+#: model:ir.ui.menu,name:todo.menu_task_list
+msgid "Task List"
+msgstr "代办事项列表"
+
+#. module: todo
+#: model:ir.ui.menu,name:todo.menu_root
+msgid "Todo"
+msgstr "待办事项"
+
+#. module: todo
+#: model:ir.actions.act_window,name:todo.act_todo_task_win
+msgid "Todo Task Window"
+msgstr "待办事项菜单"
+
+#. module: todo
+#: model:ir.model,name:todo.model_todo_task
+msgid "todo.task"
+msgstr ""
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_is_done
+msgid "已完成"
+msgstr "已完成"
+
+#. module: todo
+#: model:ir.model.fields,field_description:todo.field_todo_task_name
+msgid "待办事项名称"
+msgstr "待办事项名称"
