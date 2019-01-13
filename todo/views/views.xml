@@ -2,48 +2,48 @@
   <data>
     <!-- explicit list view definition -->
 
-    <!--<record model="ir.ui.view" id="task_category_list">-->
-      <!--<field name="name">Todo Task Category List</field>-->
-      <!--<field name="model">todo.task.category</field>-->
-      <!--<field name="arch" type="xml">-->
-        <!--<tree>-->
-          <!--<field name="name"/>-->
-          <!--<field name="task_ids"/>-->
-          <!--<field name="task_count"/>-->
-        <!--</tree>-->
-      <!--</field>-->
-    <!--</record>-->
+    <record model="ir.ui.view" id="task_category_list">
+      <field name="name">Todo Task Category List</field>
+      <field name="model">todo.task.category</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="task_ids"/>
+          <field name="task_count"/>
+        </tree>
+      </field>
+    </record>
 
-    <!--<record model="ir.ui.view" id="task_category_form">-->
-      <!--<field name="name">Todo Task Category Form</field>-->
-      <!--<field name="model">todo.task.category</field>-->
-      <!--<field name="arch" type="xml">-->
+    <record model="ir.ui.view" id="task_category_form">
+      <field name="name">Todo Task Category Form</field>
+      <field name="model">todo.task.category</field>
+      <field name="arch" type="xml">
 
-        <!--<form>-->
-          <!--<sheet>-->
-            <!--<group>-->
-              <!--<field name="name"/>-->
-            <!--</group>-->
-            <!--<group>-->
-              <!--<field name="task_count"/>-->
-            <!--</group>-->
-            <!--<notebook>-->
-              <!--<page string="task_ids">-->
-                <!--<fields name="task_ids">-->
-                  <!--&lt;!&ndash;<tree>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<field name="name"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<field name="is_done"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<field name="priority"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<field name="is_expired"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<field name="category_id"/>&ndash;&gt;-->
-                  <!--&lt;!&ndash;</tree>&ndash;&gt;-->
-                <!--</fields>-->
-              <!--</page>-->
-            <!--</notebook>-->
-          <!--</sheet>-->
-        <!--</form>-->
-      <!--</field>-->
-    <!--</record>-->
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+            </group>
+            <group>
+              <field name="task_count"/>
+            </group>
+            <notebook>
+              <page string="task_ids">
+                <fields name="task_ids">
+                  <!--<tree>-->
+                    <!--<field name="name"/>-->
+                    <!--<field name="is_done"/>-->
+                    <!--<field name="priority"/>-->
+                    <!--<field name="is_expired"/>-->
+                    <!--<field name="category_id"/>-->
+                  <!--</tree>-->
+                </fields>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
 
     <record model="ir.ui.view" id="todo.task_list">
       <field name="name">Todo Task List</field>
@@ -89,11 +89,11 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-    <!--<record model="ir.actions.act_window" id="act_todo_task_category_win">-->
-      <!--<field name="name">Todo Task Category Window</field>-->
-      <!--<field name="res_model">todo.task.category</field>-->
-      <!--<field name="view_mode">tree,form</field>-->
-    <!--</record>-->
+    <record model="ir.actions.act_window" id="act_todo_task_category_win">
+      <field name="name">Todo Task Category Window</field>
+      <field name="res_model">todo.task.category</field>
+      <field name="view_mode">tree,form</field>
+    </record>
 
 
     <!-- Top menu item -->
@@ -107,7 +107,7 @@
 
     <!-- actions -->
 
-    <!--<menuitem name="Task Category" id="menu_task_category_list" parent="menu_task" action="act_todo_task_category_win"/>-->
+    <menuitem name="Task Category" id="menu_task_category_list" parent="menu_task" action="act_todo_task_category_win"/>
     <menuitem name="Task List" id="menu_task_list" parent="menu_task" action="act_todo_task_win"/>
 
     <!--<menuitem name="Server to list" id="todo" parent="todo.menu_2" action="todo.action_server"/>-->

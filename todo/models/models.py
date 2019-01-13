@@ -7,14 +7,14 @@ class TodoTaskCategory(models.Model):
     _desciption = "待办事项类别"
 
     name = fields.Char(string="代办事项类别名称", required=True)
-    # task_ids = fields.One2many("todo.task", "category_ids", string="待办事项")
-    # task_count = fields.Insteger(string="待办事项数量", compute="_compute_task_count")
-    #
-    # @api.depends(models.Model):
-    # @api.multi
-    # def _compute_task_count(self):
-    #     for rec in self:
-    #         rec.task_count = len(rec.task_ids)
+    task_ids = fields.One2many("todo.task", "category_id", string="待办事项")
+    task_count = fields.Integer(string="待办事项数量", compute="_compute_task_count")
+
+    @api.depends("task_ids")
+    @api.multi
+    def _compute_task_count(self):
+        for rec in self:
+            rec.task_count = len(rec.task_ids)
 
 
 class TodoTask(models.Model):
