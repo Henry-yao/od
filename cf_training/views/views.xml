@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!--record 表示对应数据库里某一张表的某一个记录 所有东西都会写入数据库，这里会写入ir_ui_view数据表-->
+    <!--arch表示实际的结构 格式为xml list是列表视图-->
+    <!--form是表单视图-->
+    <record model="ir.ui.view" id="course_list">
+      <field name="name">Course List</field>
+      <field name="model">training.course</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description"/>
+          <field name="active"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="course_form">
+      <field name="name">Course Form</field>
+      <field name="model">training.course</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet><!-- 中间一片 -->
+            <group><!-- 一层的时候从上往下排 -->
+
+              <group><!-- 两层的时候从左往下再到右 -->
+                <field name="name"/>
+                <field name="description"/>
+              </group>
+
+              <group>
+                <field name="active"/>
+              </group>
+            </group>
+            <!-- One2many字段视图开始 -->
+            <notebook>
+                <page string="已开课班级" name="session_ids">
+                  <field name="session_ids"/><!--若ids"/直接关掉会按照默认列表展示-->
+                </page>
+              </notebook>
+            <!-- one2many结束 -->
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="session_list">
+      <field name="name">Session List</field>
+      <field name="model">training.session</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <!--m2o-->
+          <field name="course_id"/>
+          <field name="end_date"/>
+          <field name="duration"/>
+          <field name="seats"/>
+          <field name="taken_seats"/>
+          <field name="active"/>
+          <field name="attendees_count"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="session_form">
+      <field name="name">Session Form</field>
+      <field name="model">training.session</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet><!-- 中间一片 -->
+            <group><!-- 一层的时候从上往下排 -->
+
+              <group><!-- 两层的时候从左往下再到右 -->
+                <field name="name"/>
+                <field name="end_date"/>
+                <field name="duration"/>
+                <field name="course_id"/>
+                </group>
+
+              <group>
+                <field name="seats"/>
+                <field name="taken_seats"/>
+                <field name="active"/>
+                <field name="attendees_count"/>
+              </group>
+
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record id="act_course_window" model="ir.actions.act_window">
+      <field name="name">Course Window</field>
+      <field name="res_model">training.course</field><!-- 定义原模型是哪个  -->
+      <field name="view_mode">tree,form</field><!-- 定义这些动作能打开哪些视图，tree在前面默认先打开tree   -->
+    </record>
+
+    <record id="act_session_window" model="ir.actions.act_window">
+      <field name="name">Session Window</field>
+      <field name="res_model">training.session</field><!-- 定义原模型是哪个  -->
+      <field name="view_mode">tree,form</field><!-- 定义这些动作能打开哪些视图，tree在前面默认先打开tree   -->
+    </record>
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="cf_training.action_server">
+      <field name="name">cf_training server</field>
+      <field name="model_id" ref="model_cf_training_cf_training"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="cf_training" id="cf_training.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="cf_training.menu_1" parent="cf_training.menu_root"/>
+    <menuitem name="Menu 2" id="cf_training.menu_2" parent="cf_training.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="cf_training.menu_1_list" parent="cf_training.menu_1"
+              action="cf_training.action_window"/>
+    <menuitem name="Server to list" id="cf_training" parent="cf_training.menu_2"
+              action="cf_training.action_server"/>
+    -->
+  </data>
+</odoo>

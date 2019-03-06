@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--id="root_menu"   name 是菜单显示的名称  sequence是菜单的排序-->
+<!--parent="root_menu" "他的上级是什么"-->
+<!--action=""指定动作 填写对应的model 如用户无权限依然看不到菜 -->
+<odoo>
+    <data>
+        <!--根菜单-->
+        <menuitem id="root_menu" name="ODOO开发培训" sequence="0"/>  <!--没有上级表示顶级-->
+        <!--&lt;!&ndash;课程菜单 &ndash;&gt;-->
+        <menuitem id="course_menu" name="Courses" parent="root_menu"  action="act_course_window" sequence="2" /> <!--若未指定动作菜单则不显示&ndash;&gt;-->
+        <!--&lt;!&ndash;开课班级&ndash;&gt;-->
+        <menuitem id="session_menu" name="Session" parent="root_menu" action="act_session_window" sequence="3"/>
+    </data>
+</odoo>
