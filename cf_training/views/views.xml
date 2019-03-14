@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
+    <!--继承扩展partner视图部分-->
+    <!--inherit_id 当前视图继承对上级视图是哪个：base.view_partner_tree-->
+    <!--通过xpath方式查找，//是不指定哪个节点开始。查找@属性节点为vat，找到后position='after'（增加）-->
+    <!--position属性有： after后面追加，before前面插入，inside范围里插入，replace把找到替换，attributes -->
+    <!--attributes用法 <attribute name="invisible" eval="False"> 指定修改某个属性，这里把inxx改为false-->
+    <record id="view_partner_tree" model="ir.ui.view">
+      <field name="name">Res Partner List</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+
+        <!--在field 里面找到名字为vat的字段 在后面加入<field name="instructor">-->
+        <xpath expr="//field[@name='vat']" position="after">
+          <field name="instructor"/>
+        </xpath>
+
+        <!--在notebook范围里加入<paee string="canxunkecheng " name="attendee_session_ids"(这个名称是节点名称可自定义)-->
+        <xpath expr="//notebook" position="inside">
+          <page string="参训课程" name="attendee_session_ids">
+            <field name="attendee_session_ids"/>
+          </page>
+        </xpath>
+
+        <!--强制此页签不可见invisible="False"或者0  -->
+        <!--'invisible':[('instructor', '=', True)] 是python字典-->
+        <!--invisible是属性名字，方括号里是数组，圆括号里是表达式是domain/域
+        判断页标签什么时候可见-->
+        <xpath expr="//notebook" position="inside">
+               <page string="主讲课程" name="instructor_course_ids" attrs="{'invisible':[('instructor', '=', False)]}">
+            <field name="instructor_course_ids"/>
+          </page>
+        </xpath>
+
+      </field>
+    </record>
     <!--record 表示对应数据库里某一张表的某一个记录 所有东西都会写入数据库，这里会写入ir_ui_view数据表-->
     <!--arch表示实际的结构 格式为xml list是列表视图-->
     <!--form是表单视图-->
